@@ -1,0 +1,11 @@
+
+@model EstacionamientoInteligente.Models.Entrada
+@{
+    ViewData["Title"] = "Registro de Entrada";
+}
+
+<h2>Registrar Entrada de Vehículo</h2>
+<form asp-action="RegistrarEntrada" method="post">
+    <input type="text" name="placa" placeholder="Ingrese la placa" required />
+    <button type="submit">Registrar Entrada</button>
+</form>
