@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace EstacionamientoInteligente.Controllers;
 using EstacionamientoInteligente.Data;
-using EstacionamientoInteligente.Models;
 public class EstanciaController : Controller
 {
     private readonly EstacionamientoContext _context;
