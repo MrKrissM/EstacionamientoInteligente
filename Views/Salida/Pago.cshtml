@@ -7,7 +7,7 @@
     <p>Hora de Entrada: @Model.Vehiculo.HoraEntrada</p>
     <p>Hora de Salida: @Model.Vehiculo.HoraSalida</p>
     <p>Duración: @((Model.Vehiculo.HoraSalida.Value - Model.Vehiculo.HoraEntrada).TotalMinutes) minutos</p>
-    <p>Monto a Pagar: $@Model.Monto</p>
+    <p>Monto a Pagar: $@Model.MontoAPagar</p>
 </div>
 
 <a asp-action="Index" class="btn btn-primary">Volver</a>
