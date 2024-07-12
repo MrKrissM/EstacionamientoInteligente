@@ -8,6 +8,5 @@ public class Vehiculo
 
     public ICollection<Pago> Pagos { get; set; }
     public ICollection<Entrada> Entradas { get; set; }
-    public ICollection<Estancia> Estancias { get; set; }
     public ICollection<Salida> Salidas { get; set; }
 }

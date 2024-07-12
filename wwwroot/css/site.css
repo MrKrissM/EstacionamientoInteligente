@@ -18,5 +18,11 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  background-color: #f8f9fa;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
