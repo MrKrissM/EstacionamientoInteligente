@@ -4,6 +4,7 @@ using EstacionamientoInteligente.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EstacionamientoInteligente.Migrations
 {
     [DbContext(typeof(EstacionamientoContext))]
-    partial class EstacionamientoContextModelSnapshot : ModelSnapshot
+    [Migration("20240717215344_AgregarSalida")]
+    partial class AgregarSalida
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,7 +72,16 @@ namespace EstacionamientoInteligente.Migrations
                     b.Property<int?>("VehiculoId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("VehiculoId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("VehiculoId");
+
+                    b.HasIndex("VehiculoId1")
+                        .IsUnique()
+                        .HasFilter("[VehiculoId1] IS NOT NULL");
 
                     b.ToTable("Lugares");
                 });
@@ -151,18 +163,11 @@ namespace EstacionamientoInteligente.Migrations
                     b.Property<DateTime?>("HoraSalida")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("LugarId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Placa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LugarId")
-                        .IsUnique()
-                        .HasFilter("[LugarId] IS NOT NULL");
 
                     b.ToTable("Vehiculos");
                 });
@@ -180,6 +185,20 @@ namespace EstacionamientoInteligente.Migrations
                         .IsRequired();
 
                     b.Navigation("LugarAsignado");
+
+                    b.Navigation("Vehiculo");
+                });
+
+            modelBuilder.Entity("EstacionamientoInteligente.Models.Lugar", b =>
+                {
+                    b.HasOne("EstacionamientoInteligente.Models.Vehiculo", "Vehiculo")
+                        .WithMany("Lugares")
+                        .HasForeignKey("VehiculoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EstacionamientoInteligente.Models.Vehiculo", null)
+                        .WithOne("Lugar")
+                        .HasForeignKey("EstacionamientoInteligente.Models.Lugar", "VehiculoId1");
 
                     b.Navigation("Vehiculo");
                 });
@@ -214,23 +233,12 @@ namespace EstacionamientoInteligente.Migrations
 
             modelBuilder.Entity("EstacionamientoInteligente.Models.Vehiculo", b =>
                 {
-                    b.HasOne("EstacionamientoInteligente.Models.Lugar", "Lugar")
-                        .WithOne("Vehiculo")
-                        .HasForeignKey("EstacionamientoInteligente.Models.Vehiculo", "LugarId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Lugar");
-                });
-
-            modelBuilder.Entity("EstacionamientoInteligente.Models.Lugar", b =>
-                {
-                    b.Navigation("Vehiculo")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EstacionamientoInteligente.Models.Vehiculo", b =>
-                {
                     b.Navigation("Entradas");
+
+                    b.Navigation("Lugar")
+                        .IsRequired();
+
+                    b.Navigation("Lugares");
 
                     b.Navigation("Pagos");
 

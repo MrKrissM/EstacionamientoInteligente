@@ -60,6 +60,16 @@ namespace EstacionamientoInteligente.Controllers
             {
                 _context.Add(vehiculo);
                 await _context.SaveChangesAsync();
+
+                // Buscar un lugar disponible
+                var lugarDisponible = await _context.Lugares.FirstOrDefaultAsync(l => !l.Ocupado);
+                if (lugarDisponible != null)
+                {
+                    lugarDisponible.Ocupado = true;
+                    lugarDisponible.VehiculoId = vehiculo.Id;
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(vehiculo);
@@ -152,6 +162,38 @@ namespace EstacionamientoInteligente.Controllers
         private bool VehiculoExists(int id)
         {
             return _context.Vehiculos.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> RegistrarSalida(string placa)
+        {
+            if (string.IsNullOrEmpty(placa))
+            {
+                TempData["Error"] = "Por favor, ingrese una placa válida.";
+                return RedirectToAction("Index", "Lugar");
+            }
+
+            var vehiculo = await _context.Vehiculos
+                .Include(v => v.Lugar)
+                .FirstOrDefaultAsync(v => v.Placa == placa && v.HoraSalida == null);
+
+            if (vehiculo == null)
+            {
+                TempData["Error"] = $"No se encontró un vehículo con la placa {placa} en el estacionamiento.";
+                return RedirectToAction("Index", "Lugar");
+            }
+
+            vehiculo.HoraSalida = DateTime.Now;
+
+            if (vehiculo.Lugar != null)
+            {
+                vehiculo.Lugar.Ocupado = false;
+                vehiculo.Lugar.VehiculoId = null;
+            }
+
+            await _context.SaveChangesAsync();
+
+            TempData["Exito"] = $"El vehículo con placa {placa} ha salido del estacionamiento.";
+            return RedirectToAction("Index", "Lugar");
         }
     }
 }

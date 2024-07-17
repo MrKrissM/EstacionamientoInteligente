@@ -1,0 +1,28 @@
+@model EstacionamientoInteligente.Models.Pago
+
+@{
+  ViewData["Title"] = "Salida"; // Update title for clarity
+}
+
+<h1>Marcar Salida</h1>
+
+<hr />
+<div class="row">
+  <div class="col-md-4">
+    <form asp-action="MarcarSalida">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <div class="form-group">
+        <label asp-for="Placa" class="control-label">Placa del Vehículo</label>
+        <input asp-for="Placa" class="form-control" />
+        <span asp-validation-for="Placa" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Marcar Salida" class="btn btn-primary" />
+      </div>
+    </form>
+  </div>
+</div>
+
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

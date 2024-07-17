@@ -17,13 +17,40 @@ namespace EstacionamientoInteligente.Controllers
         public LugarController(EstacionamientoContext context)
         {
             _context = context;
+            InitializeLugares().Wait();
+        }
+
+        private async Task InitializeLugares()
+        {
+            var lugaresExistentes = await _context.Lugares.ToListAsync();
+            var numerosExistentes = lugaresExistentes.Select(l => l.Numero).ToHashSet();
+
+            for (int i = 1; i <= 20; i++)
+            {
+                if (!numerosExistentes.Contains(i))
+                {
+                    _context.Lugares.Add(new Lugar { Numero = i, Ocupado = false });
+                }
+            }
+
+            if (lugaresExistentes.Count > 20)
+            {
+                var lugaresExcedentes = lugaresExistentes.OrderBy(l => l.Numero).Skip(20);
+                _context.Lugares.RemoveRange(lugaresExcedentes);
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         // GET: Lugar
         public async Task<IActionResult> Index()
         {
-            var estacionamientoContext = _context.Lugares.Include(l => l.Vehiculo);
-            return View(await estacionamientoContext.ToListAsync());
+            var lugares = await _context.Lugares
+                .Include(l => l.Vehiculo)
+                .OrderBy(l => l.Numero)
+                .Take(20)
+                .ToListAsync();
+            return View(lugares);
         }
 
         // GET: Lugar/Details/5
@@ -160,5 +187,50 @@ namespace EstacionamientoInteligente.Controllers
         {
             return _context.Lugares.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> MarcarOcupado(int id)
+        {
+            var lugar = await _context.Lugares.FindAsync(id);
+            if (lugar != null)
+            {
+                lugar.Ocupado = true;
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> MarcarLibre(int id)
+        {
+            var lugar = await _context.Lugares
+                .Include(l => l.Vehiculo)
+                .FirstOrDefaultAsync(l => l.Id == id);
+
+            if (lugar == null)
+            {
+                TempData["Error"] = "El lugar de estacionamiento no existe.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (!lugar.Ocupado)
+            {
+                TempData["Error"] = "Este lugar ya está libre.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (lugar.Vehiculo != null)
+            {
+                lugar.Vehiculo.HoraSalida = DateTime.Now;
+                lugar.Vehiculo = null;
+            }
+
+            lugar.Ocupado = false;
+            lugar.VehiculoId = null;
+
+            await _context.SaveChangesAsync();
+
+            TempData["Exito"] = "El lugar ha sido marcado como libre y el vehículo ha salido.";
+            return RedirectToAction(nameof(Index));
+        }
     }
+
 }

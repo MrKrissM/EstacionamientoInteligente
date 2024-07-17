@@ -1,47 +1,56 @@
 @model IEnumerable<EstacionamientoInteligente.Models.Lugar>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Estacionamiento";
 }
 
-<h1>Estancia</h1>
+<h1>Estacionamiento</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Numero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ocupado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vehiculo)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Numero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ocupado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
 }
-    </tbody>
-</table>
+
+@if (TempData["Exito"] != null)
+{
+    <div class="alert alert-success">@TempData["Exito"]</div>
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="card @(item.Ocupado ? "bg-danger" : "bg-success") text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Lugar @item.Numero</h5>
+                        <p class="card-text">
+                            Estado: @(item.Ocupado ? "Ocupado" : "Libre")
+                        </p>
+                        @if (item.Ocupado && item.Vehiculo != null)
+                        {
+                            <p class="card-text">Vehículo: @item.Vehiculo.Placa</p>
+                        }
+                        <div class="mt-2">
+                            @if (!item.Ocupado)
+                            {
+                                <a asp-controller="Lugar" asp-action="MarcarOcupado" asp-route-id="@item.Id"
+                                    class="btn btn-light">Marcar como Ocupado</a>
+                                <p class="card-text">Vehículo: @item.Vehiculo?.Placa</p>
+                            }
+                            else
+                            {
+                                <a asp-controller="Lugar" asp-action="MarcarLibre" asp-route-id="@item.Id"
+                                    class="btn btn-light">Marcar como Libre</a>
+                                <form asp-controller="Vehiculo" asp-action="RegistrarSalida" method="post" class="mt-2">
+                                    <input type="hidden" name="placa" value="@item.Vehiculo?.Placa" />
+                                    <button type="submit" class="btn btn-light">Registrar Salida</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

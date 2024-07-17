@@ -48,7 +48,7 @@ namespace EstacionamientoInteligente.Controllers
         // GET: Pago/Create
         public IActionResult Create()
         {
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id");
+            // ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id");
             return View();
         }
 
@@ -57,15 +57,27 @@ namespace EstacionamientoInteligente.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,VehiculoId,Monto,FechaPago")] Pago pago)
+        public async Task<IActionResult> Create([Bind("Id,Placa,Monto,FechaPago")] Pago pago)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pago);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Find the vehicle by Placa
+                var vehiculo = await _context.Vehiculos.FirstOrDefaultAsync(v => v.Placa == pago.Placa);
+
+                if (vehiculo != null)
+                {
+                    pago.VehiculoId = vehiculo.Id; // Set VehiculoId based on found vehicle
+                    _context.Add(pago);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    // Handle case where vehicle with Placa is not found
+                    ModelState.AddModelError("Placa", "Placa no encontrada");
+                }
             }
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id", pago.VehiculoId);
+
             return View(pago);
         }
 
@@ -160,5 +172,39 @@ namespace EstacionamientoInteligente.Controllers
         {
             return _context.Pagos.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> MarcarSalida(string placa) // Use string for placa
+        {
+            if (string.IsNullOrEmpty(placa))
+            {
+                ModelState.AddModelError("Placa", "La placa del vehículo es requerida");
+                return View(); // Consider returning a specific "Salida" view
+            }
+
+            // Check for existing vehicle with the same placa (case-insensitive)
+            var existingVehiculo = await _context.Vehiculos
+                                                 .FirstOrDefaultAsync(v => v.Placa.ToLower() == placa.ToLower());
+
+            if (existingVehiculo != null)
+            {
+                // Handle duplicate plate scenario
+                ModelState.AddModelError("Placa", "Placa duplicada. Se han eliminado todos los registros con esta placa.");
+
+                // Delete all vehicles with the duplicate placa (assuming you want to prevent duplicates)
+                _context.Vehiculos.RemoveRange(_context.Vehiculos.Where(v => v.Placa.ToLower() == placa.ToLower()));
+                await _context.SaveChangesAsync();
+
+                return View(); // Consider returning a specific "Salida" view with a warning message
+            }
+
+            // If no duplicate found, proceed with normal salida logic
+            var vehiculo = new Vehiculo { Placa = placa, HoraSalida = DateTime.Now }; // Assuming you create a new record
+
+            _context.Add(vehiculo);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index)); // Redirect to desired action
+        }
+
     }
 }

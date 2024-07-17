@@ -23,5 +23,17 @@ public class EstacionamientoContext : DbContext
         entity.Property(p => p.Monto)
             .HasColumnType("decimal(18, 2)");
     });
+
+    modelBuilder.Entity<Lugar>()
+        .HasOne(l => l.Vehiculo)
+        .WithOne(v => v.Lugar)
+        .HasForeignKey<Lugar>(l => l.VehiculoId)
+        .OnDelete(DeleteBehavior.SetNull);
+
+    modelBuilder.Entity<Vehiculo>()
+        .HasOne(v => v.Lugar)
+        .WithOne(l => l.Vehiculo)
+        .HasForeignKey<Vehiculo>(v => v.LugarId)
+        .OnDelete(DeleteBehavior.SetNull);
 }
 }

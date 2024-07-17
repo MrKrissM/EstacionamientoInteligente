@@ -4,8 +4,32 @@
     ViewData["Title"] = "Registro de Entrada";
 }
 
-<h2>Registrar Entrada de Vehículo</h2>
-<form asp-action="RegistrarEntrada" method="post">
-    <input type="text" name="placa" placeholder="Ingrese la placa" required />
-    <button type="submit">Registrar Entrada</button>
-</form>
+<h1>@ViewData["Title"]</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (TempData["Exito"] != null)
+{
+    <div class="alert alert-success">@TempData["Exito"]</div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RegistrarEntrada" method="post">
+            <div class="form-group">
+                <label for="placa" class="control-label">Placa del Vehículo</label>
+                <input name="placa" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Registrar Entrada" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Vehiculo" asp-action="Index">Ver Lista de Vehículos</a>
+</div>
