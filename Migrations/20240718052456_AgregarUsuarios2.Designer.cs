@@ -4,6 +4,7 @@ using EstacionamientoInteligente.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EstacionamientoInteligente.Migrations
 {
     [DbContext(typeof(EstacionamientoContext))]
-    partial class EstacionamientoContextModelSnapshot : ModelSnapshot
+    [Migration("20240718052456_AgregarUsuarios2")]
+    partial class AgregarUsuarios2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

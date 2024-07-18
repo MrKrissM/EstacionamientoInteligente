@@ -164,36 +164,36 @@ namespace EstacionamientoInteligente.Controllers
             return _context.Vehiculos.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> RegistrarSalida(string placa)
-        {
-            if (string.IsNullOrEmpty(placa))
-            {
-                TempData["Error"] = "Por favor, ingrese una placa válida.";
-                return RedirectToAction("Index", "Lugar");
-            }
+    public async Task<IActionResult> RegistrarSalida(string placa)
+{
+    if (string.IsNullOrEmpty(placa))
+    {
+        TempData["Error"] = "Por favor, ingrese una placa válida.";
+        return RedirectToAction("Index", "Lugar");
+    }
 
-            var vehiculo = await _context.Vehiculos
-                .Include(v => v.Lugar)
-                .FirstOrDefaultAsync(v => v.Placa == placa && v.HoraSalida == null);
+    var vehiculo = await _context.Vehiculos
+        .Include(v => v.Lugar)
+        .FirstOrDefaultAsync(v => v.Placa == placa && v.HoraSalida == null);
 
-            if (vehiculo == null)
-            {
-                TempData["Error"] = $"No se encontró un vehículo con la placa {placa} en el estacionamiento.";
-                return RedirectToAction("Index", "Lugar");
-            }
+    if (vehiculo == null)
+    {
+        TempData["Error"] = $"No se encontró un vehículo con la placa {placa} en el estacionamiento.";
+        return RedirectToAction("Index", "Lugar");
+    }
 
-            vehiculo.HoraSalida = DateTime.Now;
+    vehiculo.HoraSalida = DateTime.Now;
 
-            if (vehiculo.Lugar != null)
-            {
-                vehiculo.Lugar.Ocupado = false;
-                vehiculo.Lugar.VehiculoId = null;
-            }
+    if (vehiculo.Lugar != null)
+    {
+        vehiculo.Lugar.Ocupado = false;
+        vehiculo.Lugar.VehiculoId = null;
+    }
 
-            await _context.SaveChangesAsync();
+    await _context.SaveChangesAsync();
 
-            TempData["Exito"] = $"El vehículo con placa {placa} ha salido del estacionamiento.";
-            return RedirectToAction("Index", "Lugar");
-        }
+    TempData["Exito"] = $"El vehículo con placa {placa} ha salido del estacionamiento.";
+    return RedirectToAction("Index", "Lugar");
+}
     }
 }

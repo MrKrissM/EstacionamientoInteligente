@@ -504,3 +504,4 @@ C:\Users\S1VS3-USER09\Documents\Proyectos\EstacionamientoInteligente\obj\Debug\n
 C:\Users\S1VS3-USER09\Documents\Proyectos\EstacionamientoInteligente\obj\Debug\net8.0\EstacionamientoInteligente.genruntimeconfig.cache
 C:\Users\S1VS3-USER09\Documents\Proyectos\EstacionamientoInteligente\obj\Debug\net8.0\ref\EstacionamientoInteligente.dll
 D:\TNS INFORMATICA\3er SEMESTRE\Programacion NETCORE\EstacionamientoInteligente\obj\Debug\net8.0\EstacionamientoInteligente.sourcelink.json
+D:\TNS INFORMATICA\3er SEMESTRE\Programacion NETCORE\EstacionamientoInteligente\bin\Debug\net8.0\BCrypt.Net-Next.dll

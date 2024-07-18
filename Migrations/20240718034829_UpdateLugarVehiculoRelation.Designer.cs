@@ -4,6 +4,7 @@ using EstacionamientoInteligente.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EstacionamientoInteligente.Migrations
 {
     [DbContext(typeof(EstacionamientoContext))]
-    partial class EstacionamientoContextModelSnapshot : ModelSnapshot
+    [Migration("20240718034829_UpdateLugarVehiculoRelation")]
+    partial class UpdateLugarVehiculoRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,9 +73,6 @@ namespace EstacionamientoInteligente.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Numero")
-                        .IsUnique();
 
                     b.ToTable("Lugares");
                 });
@@ -138,31 +138,6 @@ namespace EstacionamientoInteligente.Migrations
                     b.HasIndex("VehiculoId");
 
                     b.ToTable("Salidas");
-                });
-
-            modelBuilder.Entity("EstacionamientoInteligente.Models.Usuario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Username")
-                        .IsUnique();
-
-                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("EstacionamientoInteligente.Models.Vehiculo", b =>

@@ -224,7 +224,7 @@ namespace EstacionamientoInteligente.Controllers
             }
 
             lugar.Ocupado = false;
-            lugar.VehiculoId = null;
+            lugar.Vehiculo = null;
 
             await _context.SaveChangesAsync();
 
