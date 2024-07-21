@@ -18,7 +18,7 @@
 
 <div class="container">
     <div class="row">
-        @foreach (var item in Model)
+        @foreach (var item in Model.OrderBy(l => l.Numero).Take(20))
         {
             <div class="col-md-3 mb-3">
                 <div class="card @(item.Ocupado ? "bg-danger" : "bg-success") text-white">
@@ -36,7 +36,6 @@
                             {
                                 <a asp-controller="Lugar" asp-action="MarcarOcupado" asp-route-id="@item.Id"
                                     class="btn btn-light">Marcar como Ocupado</a>
-                                <p class="card-text">Vehículo: @item.Vehiculo?.Placa</p>
                             }
                             else
                             {
@@ -47,6 +46,7 @@
                                     <button type="submit" class="btn btn-light">Registrar Salida</button>
                                 </form>
                             }
+                           
                         </div>
                     </div>
                 </div>

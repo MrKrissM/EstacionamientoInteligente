@@ -22,7 +22,7 @@ namespace EstacionamientoInteligente.Controllers
 
         private async Task InitializeLugares()
         {
-            var lugaresExistentes = await _context.Lugares.ToListAsync();
+            var lugaresExistentes = await _context.Lugares.OrderBy(l => l.Numero).ToListAsync();
             var numerosExistentes = lugaresExistentes.Select(l => l.Numero).ToHashSet();
 
             for (int i = 1; i <= 20; i++)
@@ -33,11 +33,9 @@ namespace EstacionamientoInteligente.Controllers
                 }
             }
 
-            if (lugaresExistentes.Count > 20)
-            {
-                var lugaresExcedentes = lugaresExistentes.OrderBy(l => l.Numero).Skip(20);
-                _context.Lugares.RemoveRange(lugaresExcedentes);
-            }
+            // Eliminar lugares excedentes
+            var lugaresExcedentes = lugaresExistentes.Where(l => l.Numero > 20);
+            _context.Lugares.RemoveRange(lugaresExcedentes);
 
             await _context.SaveChangesAsync();
         }
@@ -48,10 +46,13 @@ namespace EstacionamientoInteligente.Controllers
             var lugares = await _context.Lugares
                 .Include(l => l.Vehiculo)
                 .OrderBy(l => l.Numero)
-                .Take(20)
                 .ToListAsync();
+
+            lugares = lugares.OrderBy(l => l.Numero).Take(20).ToList();
+
             return View(lugares);
         }
+
 
         // GET: Lugar/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -78,6 +79,7 @@ namespace EstacionamientoInteligente.Controllers
             ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id");
             return View();
         }
+
 
         // POST: Lugar/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -231,6 +233,8 @@ namespace EstacionamientoInteligente.Controllers
             TempData["Exito"] = "El lugar ha sido marcado como libre y el vehículo ha salido.";
             return RedirectToAction(nameof(Index));
         }
+
+
     }
 
 }

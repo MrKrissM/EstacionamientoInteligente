@@ -1,0 +1,41 @@
+@model EstacionamientoInteligente.Models.Pago
+
+@{
+    ViewData["Title"] = "Salida de Vehículo";
+}
+
+<h1>Salida de Vehículo</h1>
+
+<div>
+    <h4>Detalles del Pago</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Vehiculo.Placa)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Vehiculo.Placa)
+        </dd>
+        <dt class="col-sm-4">
+            Minutos Estacionado
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.MinutosEstacionado)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Monto)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Monto)
+        </dd>
+        <dt class="col-sm-4">
+            Fecha y Hora de Salida
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.FechaPago)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" asp-controller="Lugar">Volver al Estacionamiento</a>
+</div>

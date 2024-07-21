@@ -30,8 +30,8 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Account/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Account/RegisterConfirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3RlckNvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Entrada/Index.cshtml]
@@ -78,6 +78,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnb1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Pago/GenerarReporte.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnb1xHZW5lcmFyUmVwb3J0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Pago/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnb1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -86,20 +90,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnb1xNYXJjYXJTYWxpZGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Salida/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsaWRhXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Salida/Pago.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsaWRhXFBhZ28uY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/UserManagement/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlck1hbmFnZW1lbnRcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/UserManagement/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlck1hbmFnZW1lbnRcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/UserManagement/EditPermissions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlck1hbmFnZW1lbnRcRWRpdFBlcm1pc3Npb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/UserManagement/EditRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlck1hbmFnZW1lbnRcRWRpdFJvbGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/UserManagement/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlck1hbmFnZW1lbnRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Vehiculo/Create.cshtml]
@@ -120,6 +136,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Vehiculo/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVoaWN1bG9cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/Vehiculo/MostrarSalida.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVoaWN1bG9cTW9zdHJhclNhbGlkYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/TNS INFORMATICA/3er SEMESTRE/Programacion NETCORE/EstacionamientoInteligente/Views/_ViewImports.cshtml]

@@ -1,0 +1,27 @@
+@model List<UserViewModel>
+
+<h1>Gestión de Usuarios</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a asp-action="EditRoles" asp-route-id="@user.Id" class="btn btn-sm btn-primary">Editar Roles</a>
+                    <a asp-action="EditPermissions" asp-route-id="@user.Id" class="btn btn-sm btn-info">Editar Permisos</a>
+                    <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

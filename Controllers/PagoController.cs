@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EstacionamientoInteligente.Data;
 using EstacionamientoInteligente.Models;
+using EstacionamientoInteligente.Helpers;
 
 namespace EstacionamientoInteligente.Controllers
 {
@@ -204,6 +205,29 @@ namespace EstacionamientoInteligente.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index)); // Redirect to desired action
+        }
+
+        // Controllers/PagoController.cs
+        // Controllers/PagoController.cs
+
+        public async Task<IActionResult> GenerarReporte(DateTime fecha)
+        {
+            var reporte = await _context.Pagos
+                .Include(p => p.Vehiculo)
+                .Where(p => p.FechaPago.Date == fecha.Date)
+                .Select(p => new ReporteEstacionamiento
+                {
+                    Placa = p.Vehiculo.Placa,
+                    HoraEntrada = p.Vehiculo.HoraEntrada,
+                    HoraSalida = p.Vehiculo.HoraSalida ?? DateTime.Now,
+                    MinutosEstacionado = p.MinutosEstacionado,
+                    MontoCobrado = p.Monto
+                })
+                .ToListAsync();
+
+            byte[] pdfBytes = PdfHelper.GenerarReportePdf(reporte, fecha);
+
+            return File(pdfBytes, "application/pdf", $"ReporteEstacionamiento_{fecha:yyyyMMdd}.pdf");
         }
 
     }

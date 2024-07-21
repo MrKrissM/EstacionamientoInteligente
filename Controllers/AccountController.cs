@@ -1,52 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Claims;
 using EstacionamientoInteligente.Models;
 using EstacionamientoInteligente.Data;
-using Microsoft.EntityFrameworkCore;
+using EstacionamientoInteligente.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace EstacionamientoInteligente.Controllers
 {
     public class AccountController : Controller
     {
         private readonly EstacionamientoContext _context;
+        private readonly IEmailService _emailService;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController(EstacionamientoContext context)
+        public AccountController(
+            EstacionamientoContext context,
+            IEmailService emailService,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
+            _emailService = emailService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (await _context.Usuarios.AnyAsync(u => u.Username == model.Username))
-                {
-                    ModelState.AddModelError("", "El nombre de usuario ya existe");
-                    return View(model);
-                }
-
-                var usuario = new Usuario
-                {
-                    Username = model.Username,
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password)
-                };
-
-                _context.Usuarios.Add(usuario);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Login");
-            }
-            return View(model);
-        }
-
+       
         public IActionResult Login()
         {
             return View();
@@ -57,31 +36,22 @@ namespace EstacionamientoInteligente.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Username == model.Username);
+                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
 
-                if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
+                if (result.Succeeded)
                 {
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, user.Username),
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-                    };
-
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
                     return RedirectToAction("Index", "Home");
                 }
-
-                ModelState.AddModelError("", "Usuario o contraseña inválidos");
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
+                }
             }
             return View(model);
         }
-
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }

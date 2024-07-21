@@ -164,36 +164,70 @@ namespace EstacionamientoInteligente.Controllers
             return _context.Vehiculos.Any(e => e.Id == id);
         }
 
-    public async Task<IActionResult> RegistrarSalida(string placa)
-{
-    if (string.IsNullOrEmpty(placa))
-    {
-        TempData["Error"] = "Por favor, ingrese una placa válida.";
-        return RedirectToAction("Index", "Lugar");
-    }
+        public async Task<IActionResult> RegistrarSalida(string placa)
+        {
+            if (string.IsNullOrEmpty(placa))
+            {
+                TempData["Error"] = "Por favor, ingrese una placa válida.";
+                return RedirectToAction("Index", "Lugar");
+            }
 
-    var vehiculo = await _context.Vehiculos
-        .Include(v => v.Lugar)
-        .FirstOrDefaultAsync(v => v.Placa == placa && v.HoraSalida == null);
+            var vehiculo = await _context.Vehiculos
+                .Include(v => v.Lugar)
+                .FirstOrDefaultAsync(v => v.Placa == placa && v.HoraSalida == null);
 
-    if (vehiculo == null)
-    {
-        TempData["Error"] = $"No se encontró un vehículo con la placa {placa} en el estacionamiento.";
-        return RedirectToAction("Index", "Lugar");
-    }
+            if (vehiculo == null)
+            {
+                TempData["Error"] = $"No se encontró un vehículo con la placa {placa} en el estacionamiento.";
+                return RedirectToAction("Index", "Lugar");
+            }
 
-    vehiculo.HoraSalida = DateTime.Now;
+            vehiculo.HoraSalida = DateTime.Now;
 
-    if (vehiculo.Lugar != null)
-    {
-        vehiculo.Lugar.Ocupado = false;
-        vehiculo.Lugar.VehiculoId = null;
-    }
+            // Calcular el tiempo de estancia y el monto a pagar
+            TimeSpan tiempoEstancia = vehiculo.HoraSalida.Value - vehiculo.HoraEntrada;
+            int minutos = (int)tiempoEstancia.TotalMinutes;
+            decimal monto = minutos * 20; // 20 pesos por minuto
 
-    await _context.SaveChangesAsync();
+            if (vehiculo.Lugar != null)
+            {
+                vehiculo.Lugar.Ocupado = false;
+                vehiculo.Lugar.VehiculoId = null;
+                vehiculo.Lugar = null;
+            }
 
-    TempData["Exito"] = $"El vehículo con placa {placa} ha salido del estacionamiento.";
-    return RedirectToAction("Index", "Lugar");
-}
+            vehiculo.LugarId = null;
+
+            await _context.SaveChangesAsync();
+
+            // Crear un nuevo pago
+            var pago = new Pago
+            {
+                VehiculoId = vehiculo.Id,
+                Monto = monto,
+                FechaPago = vehiculo.HoraSalida.Value,
+                Placa = vehiculo.Placa,
+                MinutosEstacionado = minutos
+            };
+
+            _context.Pagos.Add(pago);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("MostrarSalida", new { id = pago.Id });
+        }
+
+        public async Task<IActionResult> MostrarSalida(int id)
+        {
+            var pago = await _context.Pagos
+                .Include(p => p.Vehiculo)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (pago == null)
+            {
+                return NotFound();
+            }
+
+            return View(pago);
+        }
     }
 }

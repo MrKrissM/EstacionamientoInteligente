@@ -1,19 +1,20 @@
 @model IEnumerable<EstacionamientoInteligente.Models.Pago>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Registros de Salida";
 }
 
-<h1>Registrar Salida</h1>
+<h1>Registros de Salida</h1>
 
-<p>
-    <a asp-action="MarcarSalida">Salida Vehiculo</a>   
-</p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Vehiculo)
+            </th>
+            <th>
+                Minutos Estacionado
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Monto)
@@ -25,23 +26,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Monto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaPago)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Placa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinutosEstacionado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Monto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaPago)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+        <form asp-action="GenerarReporte" method="get">
+            <div class="form-group">
+                <label for="fecha">Fecha del Reporte:</label>
+                <input type="date" id="fecha" name="fecha" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Descargar Reporte PDF</button>
+        </form>
+
     </tbody>
 </table>

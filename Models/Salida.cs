@@ -12,7 +12,7 @@ public class Salida
 
     public DateTime FechaHoraSalida { get; set; }
 
-    public decimal TiempoEstancia { get; set; } // En minutos
+    public decimal TiempoEstancia { get; set; }
 
     public decimal MontoAPagar { get; set; }
 

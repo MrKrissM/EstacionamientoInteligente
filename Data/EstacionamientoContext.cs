@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using EstacionamientoInteligente.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace EstacionamientoInteligente.Data;
 
-public class EstacionamientoContext : DbContext
+public class EstacionamientoContext : IdentityDbContext<ApplicationUser>
 {
     public EstacionamientoContext(DbContextOptions<EstacionamientoContext> options)
         : base(options)
@@ -20,10 +22,14 @@ public class EstacionamientoContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-         modelBuilder.Entity<Usuario>()
-                .HasIndex(u => u.Username)
-                .IsUnique();
-                
+        base.OnModelCreating(modelBuilder);
+
+        // Definir una clave primaria para IdentityUserLogin<string>
+        modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(p => new { p.LoginProvider, p.ProviderKey });
+        modelBuilder.Entity<Usuario>()
+               .HasIndex(u => u.Username)
+               .IsUnique();
+
         modelBuilder.Entity<Pago>(entity =>
         {
             entity.Property(p => p.Monto)
@@ -33,9 +39,6 @@ public class EstacionamientoContext : DbContext
         modelBuilder.Entity<Lugar>()
             .HasIndex(l => l.Numero)
             .IsUnique();
-        // .HasOne(l => l.Vehiculo)
-        // .WithOne(v => v.Lugar)
-        // .HasForeignKey<Lugar>(l => l.VehiculoId);
 
 
         modelBuilder.Entity<Vehiculo>()

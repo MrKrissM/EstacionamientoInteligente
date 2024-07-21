@@ -1,0 +1,31 @@
+@model IEnumerable<EstacionamientoInteligente.Models.ReporteEstacionamiento>
+
+@{
+    ViewData["Title"] = "Reporte de Estacionamiento";
+}
+
+<h1>Reporte de Estacionamiento</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Placa</th>
+            <th>Hora de Entrada</th>
+            <th>Hora de Salida</th>
+            <th>Minutos Estacionado</th>
+            <th>Monto Cobrado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Placa</td>
+                <td>@item.HoraEntrada.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                <td>@item.HoraSalida.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                <td>@item.MinutosEstacionado</td>
+                <td>@item.MontoCobrado.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
