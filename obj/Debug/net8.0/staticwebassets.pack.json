@@ -5,12 +5,44 @@
       "PackagePath": "staticwebassets\\EstacionamientoInteligente.bundle.scp.css"
     },
     {
+      "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\css\\entrada.css",
+      "PackagePath": "staticwebassets\\css\\entrada.css"
+    },
+    {
+      "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\css\\home.css",
+      "PackagePath": "staticwebassets\\css\\home.css"
+    },
+    {
+      "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\css\\privacy.css",
+      "PackagePath": "staticwebassets\\css\\privacy.css"
+    },
+    {
+      "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\css\\reporte.css",
+      "PackagePath": "staticwebassets\\css\\reporte.css"
+    },
+    {
       "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
+      "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\css\\vehiculos.css",
+      "PackagePath": "staticwebassets\\css\\vehiculos.css"
+    },
+    {
       "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\images\\logo.png",
+      "PackagePath": "staticwebassets\\images\\logo.png"
+    },
+    {
+      "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\images\\smart-parking-illustration copy.jpg",
+      "PackagePath": "staticwebassets\\images\\smart-parking-illustration copy.jpg"
+    },
+    {
+      "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\js\\cronometro.js",
+      "PackagePath": "staticwebassets\\js\\cronometro.js"
     },
     {
       "Id": "D:\\TNS INFORMATICA\\3er SEMESTRE\\Programacion NETCORE\\EstacionamientoInteligente\\wwwroot\\js\\site.js",

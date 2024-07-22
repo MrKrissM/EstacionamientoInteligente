@@ -31,24 +31,30 @@ namespace EstacionamientoInteligente.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
+       [HttpPost]
+public async Task<IActionResult> Login(LoginViewModel model)
+{
+    if (ModelState.IsValid)
+    {
+        var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
-                }
-            }
-            return View(model);
+        if (result.Succeeded)
+        {
+            // Logging para depuración
+            Console.WriteLine($"Inicio de sesión exitoso para: {model.Username}");
+
+            // Redirigir al usuario
+            return RedirectToAction("Index", "Home");
         }
+        else
+        {
+            // Logging para depuración
+            Console.WriteLine($"Fallo en el inicio de sesión para: {model.Username}");
+            ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
+        }
+    }
+    return View(model);
+}
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

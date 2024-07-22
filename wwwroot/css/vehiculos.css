@@ -1,0 +1,109 @@
+body {
+    background: linear-gradient(to right, #EDF7FF, #E0F2FF);
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: auto;
+    margin: 5rem auto;
+    padding: 3rem;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    text-align: left;
+    font-weight: bold;
+    background-color: #E3F2FF;
+    border-bottom: 2px solid #C6D9F1;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #F9FBFF;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #F4F7FA;
+}
+
+.table tbody tr:hover {
+    background-color: #E6F2FF;
+}
+
+.table td:last-child {
+    text-align: center;
+}
+
+.table td a {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.table td a.edit {
+    background-color: #2C7BE0;
+    color: #fff;
+}
+
+.table td a.details {
+    background-color: #FFC107;
+    color: #fff;
+}
+
+.table td a.delete {
+    background-color: #DC3545;
+    color: #fff;
+}
+
+/* Responsive Design (Adjust as needed) */
+@media (max-width: 768px) {
+
+    .table th,
+    .table td {
+        font-size: 14px;
+    }
+
+    .table td:last-child {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .table td a {
+        font-size: 12px;
+    }
+
+    /* Evitar el desbordamiento en pantallas más pequeñas */
+    @media (max-width: 576px) {
+        .table {
+            overflow-x: auto;
+            /* Habilitar el desplazamiento horizontal si es necesario */
+        }
+    }
+}
+
+.cronometro {
+    font-family: monospace;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.cronometro.finalizado {
+    color: #888;
+}

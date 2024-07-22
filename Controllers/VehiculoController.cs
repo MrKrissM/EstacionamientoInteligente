@@ -22,6 +22,10 @@ namespace EstacionamientoInteligente.Controllers
         // GET: Vehiculo
         public async Task<IActionResult> Index()
         {
+            var vehiculos = await _context.Vehiculos
+                .Where(v => v.HoraSalida == null)
+                .OrderBy(v => v.HoraEntrada)
+                .ToListAsync();
             return View(await _context.Vehiculos.ToListAsync());
         }
 

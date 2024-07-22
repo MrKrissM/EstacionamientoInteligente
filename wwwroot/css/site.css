@@ -26,3 +26,8 @@ body {
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+footer {
+  max-height: 50px; /* Ajusta la altura según sea necesario */
+  /* overflow: hidden; Ocultar contenido que se desborde */
+}

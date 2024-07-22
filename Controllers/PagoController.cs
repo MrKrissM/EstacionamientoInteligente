@@ -207,8 +207,6 @@ namespace EstacionamientoInteligente.Controllers
             return RedirectToAction(nameof(Index)); // Redirect to desired action
         }
 
-        // Controllers/PagoController.cs
-        // Controllers/PagoController.cs
 
         public async Task<IActionResult> GenerarReporte(DateTime fecha)
         {
@@ -228,6 +226,24 @@ namespace EstacionamientoInteligente.Controllers
             byte[] pdfBytes = PdfHelper.GenerarReportePdf(reporte, fecha);
 
             return File(pdfBytes, "application/pdf", $"ReporteEstacionamiento_{fecha:yyyyMMdd}.pdf");
+        }
+
+        public async Task<IActionResult> DescargarReportePdf(DateTime fecha)
+        {
+            var reporte = await _context.Pagos
+                .Where(p => p.FechaPago.Date == fecha.Date)
+                .Select(p => new ReporteEstacionamiento
+                {
+                    Placa = p.Placa,
+                    HoraEntrada = p.Vehiculo.HoraEntrada,
+                    HoraSalida = p.Vehiculo.HoraSalida ?? p.FechaPago,
+                    MinutosEstacionado = p.MinutosEstacionado,
+                    MontoCobrado = p.Monto
+                })
+                .ToListAsync();
+
+            var pdfBytes = PdfHelper.GenerarReportePdf(reporte, fecha);
+            return File(pdfBytes, "application/pdf", $"Reporte_Estacionamiento_{fecha:yyyyMMdd}.pdf");
         }
 
     }

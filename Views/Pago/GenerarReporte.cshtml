@@ -4,28 +4,44 @@
     ViewData["Title"] = "Reporte de Estacionamiento";
 }
 
-<h1>Reporte de Estacionamiento</h1>
+<link rel="stylesheet" href="~/css/reporte.css" />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Placa</th>
-            <th>Hora de Entrada</th>
-            <th>Hora de Salida</th>
-            <th>Minutos Estacionado</th>
-            <th>Monto Cobrado</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Placa</td>
-                <td>@item.HoraEntrada.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                <td>@item.HoraSalida.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                <td>@item.MinutosEstacionado</td>
-                <td>@item.MontoCobrado.ToString("C")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="reporte-container">
+    <h1 class="reporte-title">Reporte de Estacionamiento</h1>
+    <p class="reporte-date">@ViewBag.FechaReporte.ToString("dd MMMM yyyy")</p>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Hora de Entrada</th>
+                    <th>Hora de Salida</th>
+                    <th>Minutos Estacionado</th>
+                    <th>Monto Cobrado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Placa</td>
+                        <td>@item.HoraEntrada.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td>@item.HoraSalida.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td>@item.MinutosEstacionado</td>
+                        <td>@item.MontoCobrado.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="reporte-summary">
+        <p><strong>Total de vehículos:</strong> @Model.Count()</p>
+        <p><strong>Ingreso total:</strong> @Model.Sum(r => r.MontoCobrado).ToString("C")</p>
+    </div>
+
+    <div class="reporte-actions">
+        <a href="@Url.Action("DescargarReportePdf", new { fecha = ViewBag.FechaReporte })" class="btn btn-primary">Descargar PDF</a>
+    </div>
+</div>

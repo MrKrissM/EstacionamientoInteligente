@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EstacionamientoInteligente.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -44,12 +46,12 @@
                                     asp-action="Index">Salida</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                    asp-action="Privacy">Privacy</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account"
                                     asp-action="Logout">Cerrar sesión</a>
+                            </li>
+                               <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                    asp-action="Privacy">Privacidad</a>
                             </li>
                         }
                         else
@@ -67,7 +69,7 @@
                                     Gestión de Usuarios
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="UserManagement" 
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="UserManagement"
                                             asp-action="Create">Crear Usuario</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="UserManagement"
                                             asp-action="Index">Listar/Modificar Usuarios</a></li>
@@ -84,11 +86,11 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
+    
+    <footer class="border-medium footer text-muted">
         <div class="container">
             &copy; 2024 - EstacionamientoInteligente - <a asp-area="" asp-controller="Home"
-                asp-action="Privacy">Privacy</a>
+                asp-action="Privacy">Privacidad</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
